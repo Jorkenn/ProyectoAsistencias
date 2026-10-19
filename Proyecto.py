@@ -8,7 +8,7 @@ def menu():
 =========================  
 1. Registrar Inasistencia
 2. Editar Inasistencia
-3. 
-4.
+3. vevevev
+4. oeoeoe
 0. Salir
   """)
