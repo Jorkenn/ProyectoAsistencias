@@ -12,3 +12,5 @@ def menu():
 4. oeoeoe
 0. Salir
   """)
+
+jainersiesmalo = "jajajja"
