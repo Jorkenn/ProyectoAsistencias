@@ -13,4 +13,4 @@ def menu():
 0. Salir
   """)
 
-jainersiesmalo = "jajajja"
+jaineresbueno = 333
