@@ -13,4 +13,4 @@ def menu():
 0. Salir
   """)
 
-ajdajdij = 12
+ajdajdigggj = 12
