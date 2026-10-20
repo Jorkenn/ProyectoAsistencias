@@ -13,4 +13,4 @@ def menu():
 0. Salir
   """)
 
-algooo = "jianerrd"
+alooo = "jianerrd"
