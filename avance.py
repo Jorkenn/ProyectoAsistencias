@@ -1,5 +1,5 @@
 def menu():
-    
+        
     print("""
 Menu
 1. Agregar inasistencia
@@ -12,13 +12,20 @@ Menu
 menu()
 
 lista_estudiantes = []
-lista_inasistencias = []
+lista_inasistencias = 0
 opcion = int(input("Ingrese una opcion:"))
 
-while not (opcion != 0 and opcion != 1 and opcion != 2 and opcion != 3 and opcion != 4):
-    opcion = int(input("Ingrese una opción: "))
+while not opcion in [0, 1, 2, 3, 4]:
+    opcion = int(input("Ingrese una opción valida para continuar: "))
     
     if opcion == 1:
+        lista_estudiantes = input("Ingrese los nombres de los estudiantes separados por comas: ").lower().split(",")
         nombre = input("Ingrese el nombre del estudiante: ").lower()
-        
-       
+        while nombre not in lista_estudiantes:
+            nombre = input("Estudiante no encontrado. Ingrese un nombre válido: ").lower()
+        lista_inasistencias += 1
+        print(f"La inasistencia de {nombre} ha sido agregada. Total de inasistencias: {lista_inasistencias}")
+
+    elif opcion == 0:
+        print("Saliendo del programa...")
+        break
