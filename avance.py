@@ -16,7 +16,7 @@ def pregunta():
     return pregun
 
 def salir():
-    print("""Desea continuar con el programa?
+    print("""Desea continuar con el programa? Responder con numeros
     1. Si
     2. No
             """)
@@ -89,6 +89,11 @@ while True:
     elif opcion == 0:
         print("Saliendo del programa...")
         break
+
     elif opcion == 2:
+        print("¿Que va editar en la inasitencias? 1.Agregar inasitencias 2.Eliminar inasistencias ")
+        n = int(input("Ingrese la opcion en numero"))
         nombre = input("Ingrese el nombre del estudiante que desea editar la inasistencia: ").lower()
-      
+        if n == 1:
+            numero = int(input("¿Cuantas inasistencias va registrar?"))
+            print(f"La cantidad de inasitencias ({numero}) a sido registrado a el aprendiz {nombre}")   
