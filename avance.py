@@ -28,7 +28,15 @@ def salir():
         op = int(input("Ingrese una opción valida para continuar: "))
     return op
 
-nombre = [0]
+<<<<<<< HEAD
+nombre = ["jor", "jose", "juan"]
+instructor = ["keke", "juaan", "jose"]
+horas_clase = [222, 333, 444]
+=======
+nombre = ["jor", "jose", "juan"]
+instructor = ["keke", "juaan", "jose"]
+horas_clase = [222, 333, 444]
+>>>>>>> 0f3aefbb874b8b7aac03ee4503438239217e71b4
 
 while True:
     menu()
