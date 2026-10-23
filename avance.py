@@ -25,7 +25,7 @@ def salir():
         op = int(input("Ingrese una opción valida para continuar: "))
     return op
 
-nombre = [0]
+nombre = []
 
 while True:
     menu()
@@ -97,3 +97,16 @@ while True:
         if n == 1:
             numero = int(input("¿Cuantas inasistencias va registrar?"))
             print(f"La cantidad de inasitencias ({numero}) a sido registrado a el aprendiz {nombre}")   
+
+    elif opcion == 4:
+        os.system('cls')
+        print("Lista de Inasistentes: ")
+        for nom in nombre:
+            print(nom)
+
+        op = salir()
+        if op == 1:
+            continue
+        elif op == 2:
+            print("Saliendo del programa...")
+            break
