@@ -12,7 +12,10 @@ Menu
 """)
 
 def pregunta():
-    pregun = input("¿Desea continuar? (s/n): ").lower()
+    pregun = input("""¿Desea continuar? 
+1.si
+2.no 
+    """).lower()
     return pregun
 
 def salir():
@@ -25,7 +28,7 @@ def salir():
         op = int(input("Ingrese una opción valida para continuar: "))
     return op
 
-nombre = []
+nombre = [0]
 
 while True:
     menu()
@@ -37,17 +40,19 @@ while True:
     if opcion == 1:
         os.system('cls')       
         lista_inasistencias = 0
-        instructor = input("Ingrese el nombre del instructor: ").lower()
+        nommbre_instructor = input("Ingrese el nombre del instructor: ").lower()
+        instructor.append(nommbre_instructor)
         print("----------------------------")
         horas = int(input("Ingrese la cantidad de horas de la clase: "))
+        horas_clase.append(horas)
         print("----------------------------")            
-        nombre_estudi = input("Ingrese el nombre del estudiante: ").lower().split()
+        nombre_estudi = input("Ingrese el nombre del estudiante: ").lower()
         nombre.append(nombre_estudi)
         lista_inasistencias += 1
         os.system('cls')
         print(f"La inasistencia de {nombre_estudi} ha sido agregada. Total de inasistencias: {lista_inasistencias}")
         print("----------------------------")
-        print(f"La inasistencia la registra el instructor {instructor}")
+        print(f"La inasistencia la registra el instructor {nommbre_instructor}")
         print("-------------------------")
         print(f"Cantidad de horas de la inasistencia: {horas}")
         print("-------------------------") 
@@ -57,34 +62,46 @@ while True:
         elif op == 2:
             print("Saliendo del programa...")
             break
-        
+
+
+    elif opcion == 2:
+        os.system('cls')
+        print("         LISTA INASISTENCIAS")
+        print(" Nombre     |    Instructor   |   Horas")
+        for i in range(len(nombre)):
+            lugar = i + 1
+            print(f"{lugar}. {nombre[i]}           {instructor[i]}             {horas_clase[i]}")
+        posi = int(input("Ingrese el índice del estudiante que desea editar: "))
+        posi = posi - 1
+        nombre_nuevo = input("Ingrese el nuevo nombre del estudiate: ")
+        instructor_nuevo = input("Ingrese el nuevo instructor: ")
+        horas_nuevo = input("Ingrese las nuevas horas de clase: ")
+        nombre[posi] = nombre_nuevo
+        instructor[posi] = instructor_nuevo
+        horas_clase[posi] = horas_nuevo
+        for i in range(len(nombre)):
+            lugar = i + 1
+            print(f"{lugar}. {nombre[i]}           {instructor[i]}             {horas_clase[i]}")
+        input("Presione Enter para volver al Menu")
+
     elif opcion == 3:
         os.system('cls')
-        print(nombre)
-        nombres = input("Ingrese el nombre del estudiante que desea eliminar la inasistencia: ").lower()
-        while nombres not in nombre:
-            print("El estudiante no se encuentra en la lista.")
-            escoger =pregunta()
-            while not escoger in ["s", "n"]:
-                escoger = input("Ingrese una opción valida para continuar: ").lower()
-            if escoger == "s":
-                nombres = input("Ingrese el nombre del estudiante que desea eliminar la inasistencia: ").lower()
-            elif escoger == "n":
-                print("Saliendo del programa...")
-                break 
-        if escoger == "n":
-            print()
-        else:    
-            nombre.remove(nombres)
-            print(nombre)
-            print(f"La inasistencia de {nombres} ha sido eliminada.")
-            print("----------------------------")
-            op = salir()  
-            if op == 1:
-                continue
-            elif op == 2:
-                print("Saliendo del programa...")
-                break
+        print("         LISTA INASISTENCIAS")
+        print(" Nombre     |    Instructor   |   Horas")
+        for i in range(len(nombre)):
+            lugar = i + 1
+            print(f"{lugar}. {nombre[i]}           {instructor[i]}             {horas_clase[i]}")
+        posi = int(input("Ingrese el índice del estudiante que desea eliminar: "))
+        posi = posi - 1
+        del nombre[posi]
+        del instructor[posi]
+        del horas_clase[posi]
+        print("         LISTA INASISTENCIAS")
+        print(" Nombre     |    Instructor   |   Horas")
+        for i in range(len(nombre)):
+            lugar = i + 1
+            print(f"{lugar}. {nombre[i]}           {instructor[i]}             {horas_clase[i]}")
+        posi = int(input("Ingrese el índice del estudiante que desea eliminar: "))
 
     elif opcion == 0:
         print("Saliendo del programa...")
