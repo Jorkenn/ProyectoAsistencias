@@ -119,9 +119,11 @@ while True:
 
     elif opcion == 4:
         os.system('cls')
-        print("Lista de Inasistentes: ")
-        for nom in nombre:
-            print(nom)
+        print("         LISTA INASISTENCIAS")
+        print(" Nombre     |    Instructor   |   Horas")
+        for i in range(len(nombre)):
+            lugar = i + 1
+            print(f"{lugar}. {nombre[i]}           {instructor[i]}             {horas_clase[i]}")
 
         op = salir()
         if op == 1:
