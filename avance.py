@@ -1,5 +1,6 @@
 import time
 import os
+from datetime import datetime
 
 def menu():
     os.system('cls')    
@@ -34,10 +35,10 @@ def estudiantes():
     print("""    =============================
         LISTA INASISTENCIAS
     =============================
- Nombre     |    Instructor   |   Horas""")
+ Nombre     |     ficha      |    Instructor   |   Horas   |        Fecha         |       Justificacion       """)
     for i in range(len(nombre)):
         lugar = i + 1
-        print(f"{lugar}. {nombre[i]}           {instructor[i]}             {horas_clase[i]}")
+        print(f"{lugar}. {nombre[i]}        {fichas[i]}           {instructor[i]}             {horas_clase[i]}          {fecha[i].strftime("%d/%m/%Y")}            {justificaciones[i]}")
 
 def posicion(p="editar"):
     cantidad = len(nombre)
@@ -48,10 +49,10 @@ def posicion(p="editar"):
         posi = correccion(f"Ingrese el índice del estudiante que desea {p}: ")
     return posi
 
-def pregunta(s = ""):
-    print(f"""\n¿Desea continuar? {s}
-1.si
-2.no 
+def pregunta(d = "¿Desea continuar?", s = "", o = "No"):
+    print(f"""\n{d} {s}
+1.Si
+2.{o} 
 """)
     op = correccion()
     while not op in [1, 2]:
@@ -72,15 +73,38 @@ def correccion(op = "Ingrese una opcion: " ):
     while True:
         try:
             cosa = int(input(op))
+            while cosa < 0:
+                print("Ingrese un numero valido")
+                cosa = int(input(op))
             return cosa
-    
         except ValueError:
             print("Opción inválida, introduce un número. \n")
-            
 
-nombre = ["jor", "jose", "juan"]
-instructor = ["keke", "juaan", "jose"]
-horas_clase = [222, 333, 444] 
+def correccion_fecha():
+    while True:
+        fecha_texto = input("Introduce una fecha (formato DD/MM/YYYY): ")
+        try:
+            # Convierte el texto en fecha
+            fecha_objeto = datetime.strptime(fecha_texto, "%d/%m/%Y")
+            return fecha_objeto
+        except ValueError:
+            print("La fecha es invalida. Usa DD/MM/YYYY.")
+
+def corregir_texto(mensaje):
+    while True:
+        texto = input(mensaje).strip().lower()
+
+        if texto == "":
+            print("El texto no puede estar vacío")
+        else:
+            return texto
+            
+nombre = []
+instructor = []
+horas_clase = [] 
+fecha = []
+justificaciones = []
+fichas = []
 
 while True:
     menu()
@@ -90,17 +114,32 @@ while True:
         opcion = correccion(op = "Ingrese una opcion valida para continuar: ")
     if opcion == 1:
         titulo()
-        nombre_estudi = input("Ingrese el nombre del estudiante: ").lower()              
-        nombre_instructor = input("Ingrese el nombre del instructor: ").lower()
+        nombre_estudi = corregir_texto("Ingrese el nombre del estudiante: ")
+        ficha = correccion(op = "Ingrese la ficha del estudiante: ")              
+        nombre_instructor = corregir_texto("Ingrese el nombre del instructor: ")
         horas = correccion(op = "Ingrese la cantidad de horas de la clase: ")
+        fechas = correccion_fecha()
+        nombre.append(nombre_estudi)
+        fichas.append(ficha)
         instructor.append(nombre_instructor)
         horas_clase.append(horas)
-        nombre.append(nombre_estudi)
+        fecha.append(fechas)
+        justi = pregunta(d="¿El estudiante tiene justificacion?")
+        while not justi in [1,2]:
+            estudiantes()
+            justi = pregunta(s = "Seleccione un numero")
+        if justi == 1:
+            justificacion = corregir_texto("\nIngrese la justificacion: \n")
+            justificaciones.append(justificacion)
+        elif justi == 2:
+            justificaciones.append("No tiene")
         cambio() 
         input("Presione Enter para volver al Menu")
 
-
     elif opcion == 2:
+        if nombre == []:
+            input("No se encuentran inasistencias. \nPresione ENTER para volver al Menu")   
+            continue
         estudiantes()
         op = pregunta()
         while not op in [1,2]:
@@ -111,12 +150,18 @@ while True:
             posi = posicion()
             posi = posi - 1
             titulo(t="EDITAR")
-            nombre_nuevo = input("Ingrese el nuevo nombre del estudiate: ")
-            instructor_nuevo = input("Ingrese el nuevo instructor: ")
+            nombre_nuevo = corregir_texto("Ingrese el nuevo nombre del estudiate: ")
+            ficha_nueva = correccion(op = "Ingrese la nueva ficha: ")
+            instructor_nuevo = corregir_texto("Ingrese el nuevo instructor: ")
             horas_nuevo = correccion(op = "Ingrese la nueva cantidad de horas de la clase: ")
+            fecha_nueva = correccion_fecha()
+            justificacion_nueva = corregir_texto("Ingrese justificacion nueva: ")
             nombre[posi] = nombre_nuevo
+            fichas[posi] = ficha_nueva
             instructor[posi] = instructor_nuevo
             horas_clase[posi] = horas_nuevo
+            fecha[posi] = fecha_nueva
+            justificaciones[posi] = justificacion_nueva
             cambio(c="editada")
             input("Presione Enter para volver al Menu")
         elif op == 2:
@@ -124,6 +169,9 @@ while True:
         
 
     elif opcion == 3:
+        if nombre == []:
+            input("No se encuentran inasistencias. \nPresione ENTER para volver al Menu")   
+            continue
         estudiantes()
         op = pregunta()
         while not op in [1,2]:
@@ -134,8 +182,11 @@ while True:
             lugar = posicion(p="eliminar")
             posi = lugar - 1
             del nombre[posi]
+            del fichas[posi]
             del instructor[posi]
             del horas_clase[posi]
+            del fecha[posi]
+            del justificaciones[posi]
             cambio(c="eliminada")
 
             input("Presione Enter para volver al Menu")
@@ -145,10 +196,28 @@ while True:
 
     elif opcion == 4:
         os.system('cls')
-        estudiantes()
-        print(f"\nInasistencias totales: {len(nombre)}")
-        input("\nPresione Enter para volver al Menu")
-        
+        escoge = pregunta(d="¿Desea ver la lista completa de inasistencias?", o = "Consultar estudiantes +3 inasistencias")
+        if escoge == 1:
+            estudiantes()
+            print(f"\nInasistencias totales: {len(nombre)}")
+            input("\nPresione Enter para volver al Menu")
+        else:
+            os.system('cls')
+            print("""        =============================
+          CANTIDAD DE INASISTENCIAS
+        =============================
+nombre    |    faltas""")
+            encontrado = False
+
+            for estudi in set(nombre):
+                faltas = nombre.count(estudi)
+                if faltas >= 3:
+                    print(f"{estudi}           {faltas}")
+                    encontrado = True
+            if encontrado == False:
+                print("No hay estudiantes con 3 o más inasistencias.")
+            input("\nPresione Enter para volver al menu")
+
     elif opcion == 0:
         salida()
         break
