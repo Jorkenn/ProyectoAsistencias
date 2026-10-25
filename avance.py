@@ -80,7 +80,7 @@ def correccion(op = "Ingrese una opcion: " ):
 
 nombre = ["jor", "jose", "juan"]
 instructor = ["keke", "juaan", "jose"]
-horas_clase = [222, 333, 444]
+horas_clase = [222, 333, 444] 
 
 while True:
     menu()
